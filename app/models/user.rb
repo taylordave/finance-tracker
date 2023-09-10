@@ -14,12 +14,23 @@ class User < ApplicationRecord
   end
 
   def can_track_stock?(ticker_symbol)
-    under_stock_limit? && !stocks.find_by_ticker(ticker_symbol)
+    under_stock_limit? && !stocks.find_by(ticker: ticker_symbol)
   end
 
   def full_name
     return "#{first_name} #{last_name}" if first_name || last_name
     "Anonymous"
+  end
+
+  def self.search(param)
+    param.strip!
+    (matches('first_name', param) +
+      matches('last_name', param) +
+      matches('email', param)).uniq
+  end
+
+  def self.matches(field_name, param)
+    where("#{field_name} like ?", "%#{param}%")
   end
 
 end
