@@ -15,4 +15,9 @@ class User < ApplicationRecord
     under_stock_limit? && !stocks.find_by_ticker(ticker_symbol)
   end
 
+  def full_name
+    return "#{first_name} #{last_name}" if first_name || last_name
+    "Anonymous"
+  end
+
 end
