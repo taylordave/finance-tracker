@@ -18,7 +18,7 @@
         <% else %>
         <span class="badge text-bg-primary ms-2">
           You are already tracking
-          <% if current_user.stocks.find_by_ticker(@stock.ticker) %>
+          <% if current_user.stocks.find_by(ticker: @stock.ticker) %>
             this stock
           <% else %>
             10 stocks

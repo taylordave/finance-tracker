@@ -1,0 +1,46 @@
+<h2>User Details</h2>
+
+<div class="pt-3 d-inline-flex">
+  <div class="card">
+    <div class="card-header results-block">
+      <table class="table table-responsive col-md-12">
+        <thead>
+        <tr class="text-center">
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= @user.full_name %></td>
+          <td><%= @user.email %></td>
+          <td>
+            <% if !current_user.friends_already?(@user) %>
+              <%= link_to 'Add to friends list',
+                          friendships_path(friend: @user),
+                          method: :post,
+                          class: 'btn btn-sm btn-success ms-2'
+              %>
+            <% else %>
+              <span class="btn btn-sm btn-primary disabled ms-2">
+                Already friends
+              </span>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid pt-5">
+  <h3>User's Portfolio</h3>
+
+  <% unless @tracked_stocks.empty? %>
+    <%= render 'stocks/lists', user: @user %>
+  <% else %>
+    <p class="lead">This user is not tracking any stocks</p>
+  <% end %>
+</div>
