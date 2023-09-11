@@ -23,13 +23,13 @@
                 <%= link_to "View Profile", '#', class: 'btn btn-sm btn-success ms-2' %>
                 <% if !current_user.friends_already?(friend) %>
                   <%= link_to 'Add to friends list',
-                              '#',
+                              friendships_path(friend: friend),
                               method: :post,
                               class: 'btn btn-sm btn-success ms-2'
                   %>
                 <% else %>
-              <span class="badge text-bg-primary ms-2">
-                You are already following this friend
+              <span class="btn btn-sm btn-primary disabled ms-2">
+                Already friends
               </span>
                 <% end %>
               </td>
