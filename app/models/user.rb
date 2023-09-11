@@ -17,6 +17,10 @@ class User < ApplicationRecord
     under_stock_limit? && !stocks.find_by(ticker: ticker_symbol)
   end
 
+  def friends_already?(friend)
+    friends.find_by(id: friend.id)
+  end
+
   def full_name
     return "#{first_name} #{last_name}" if first_name || last_name
     "Anonymous"
@@ -31,6 +35,10 @@ class User < ApplicationRecord
 
   def self.matches(field_name, param)
     where("#{field_name} like ?", "%#{param}%")
+  end
+
+  def except_current_user(users)
+    users.reject { |user| user.id == self.id }
   end
 
 end

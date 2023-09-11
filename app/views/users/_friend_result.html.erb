@@ -2,24 +2,41 @@
   <%= render 'layouts/messages' %>
 </div>
 
-<% if @friend %>
+<% if @friends %>
   <div class="pt-3 d-inline-flex">
     <div class="card">
       <div class="card-header results-block">
-        <strong>Email: </strong> <%= @friend %>
-        <strong>First Name: </strong> <%= @friend %>
-        <strong>Last Name: </strong> <%= @friend %>
-        <% if 1==2 %>
-          <%= link_to 'Add to friends list',
-                      '#',
-                      method: :post,
-                      class: 'btn btn-success ms-2'
-          %>
-        <% else %>
-          <span class="badge text-bg-primary ms-2">
-            You are already following this friend
-          </span>
-        <% end %>
+        <table class="table table-responsive col-md-12">
+          <thead>
+          <tr class="text-center">
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @friends.each do |friend| %>
+            <tr>
+              <td><%= friend.full_name %></td>
+              <td><%= friend.email %></td>
+              <td>
+                <%= link_to "View Profile", '#', class: 'btn btn-sm btn-success ms-2' %>
+                <% if !current_user.friends_already?(friend) %>
+                  <%= link_to 'Add to friends list',
+                              '#',
+                              method: :post,
+                              class: 'btn btn-sm btn-success ms-2'
+                  %>
+                <% else %>
+              <span class="badge text-bg-primary ms-2">
+                You are already following this friend
+              </span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
